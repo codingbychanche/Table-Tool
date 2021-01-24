@@ -1,0 +1,2 @@
+include ':app', ':tabletool'
+rootProject.name='Table Tool More Advanched'
