@@ -1,4 +1,4 @@
-package berthold.tabletool;
+package berthold.tabletoolmoreadvanched;
 
 /**
  * Table Array Adapter.
@@ -10,10 +10,18 @@ package berthold.tabletool;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import berthold.tabletool.TableCustomAdapter;
 
-public class TableArrayAdapter extends AppCompatActivity {
+public class MyTableArrayAdapter extends TableCustomAdapter {
 
+    private int[][] dataSource;
+    private String [] columnTitles,rowTitles;
+
+    MyTableArrayAdapter(int [][] dataSource,String [] rowTitles,String [] columnTitles){
+        this.dataSource=dataSource;
+        this.rowTitles=rowTitles;
+        this.columnTitles=columnTitles;
+    }
     /**
      * Creates a table cell containing data to be shown...
      *
@@ -23,11 +31,10 @@ public class TableArrayAdapter extends AppCompatActivity {
      * @return
      */
     public View createCell(View cellView, int row, int column) {
-
         TextView cellContent = cellView.findViewById(R.id.cell_view_text);
-        cellContent.setText(row + "/" + column);
+        String data=""+dataSource [row][column];
+        cellContent.setText(data);
         cellContent.setTag("Row:" + row);
-
         return cellView;
     }
 
@@ -40,10 +47,8 @@ public class TableArrayAdapter extends AppCompatActivity {
     public View createUpperLeftCornerCell (View upperLeftCornerCellView){
         TextView upperLeftCornerCellContent=upperLeftCornerCellView.findViewById(R.id.upper_left_corner_cell_content);
         upperLeftCornerCellContent.setText("Upper Left");
-
         return upperLeftCornerCellView;
     }
-
 
     /**
      * Creates the titel cells for each column.
@@ -54,10 +59,10 @@ public class TableArrayAdapter extends AppCompatActivity {
      */
     public View createColumnTitleCell(View columnTitleView, int column){
         TextView columnTitelContent = columnTitleView.findViewById(R.id.column_title_view_text);
-        columnTitelContent.setText("Col");
-
+        columnTitelContent.setText(columnTitles[column]);
         return columnTitleView;
     }
+
     /**
      * Creates the title cells for each row.
      *
@@ -66,10 +71,8 @@ public class TableArrayAdapter extends AppCompatActivity {
      * @return
      */
     public View createRowTitleCell(View rowTitleView, int row) {
-
         TextView rowTitelContent = rowTitleView.findViewById(R.id.row_title_view_text);
-        rowTitelContent.setText("Row");
-
+        rowTitelContent.setText(rowTitles[row]);
         return rowTitleView;
     }
 }

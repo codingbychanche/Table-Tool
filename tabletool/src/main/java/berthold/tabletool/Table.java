@@ -17,6 +17,7 @@ public class Table extends AppCompatActivity {
     boolean tableHasTitleCells;
     private int columns, rows, cellViewID,upperLeftCornerCellID,columnTitleID,rowTitleID;
     private int dataSource[][];
+    private TableCustomAdapter tableArrayAdapter;
     private Context context;
 
     /**
@@ -27,12 +28,16 @@ public class Table extends AppCompatActivity {
      * @param cellViewID
      * @param context
      */
-    public Table(int columns, int rows, int cellViewID, Context context) {
+    public Table(int rows, int columns, int cellViewID, Context context) {
         tableHasTitleCells=false;
         this.columns = columns;
         this.rows = rows;
         this.cellViewID = cellViewID;
         this.context = context;
+    }
+
+    public void setAdapter (TableCustomAdapter tableArrayAdapter){
+        this.tableArrayAdapter=tableArrayAdapter;
     }
 
     /**
@@ -76,9 +81,6 @@ public class Table extends AppCompatActivity {
         // Create layout params like you would inside the layout.xml file
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
-        // Initiate adapter which fills views obtained by this method with data
-        // and returns views containing that data.
-        TableArrayAdapter tableArrayAdapter = new TableArrayAdapter();
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // Layout for the table
@@ -96,18 +98,18 @@ public class Table extends AppCompatActivity {
             titleRowLayout.addView(upperLeftCornerCell);
 
             // Now add column titles to title bar
-            for (int column = 0; column <= columns; column++) {
+            for (int column = 0; column <= columns-1; column++) {
 
                 View columnTitleView = inflater.inflate(columnTitleID, null);
                 View columnTitle = tableArrayAdapter.createColumnTitleCell(columnTitleView, column);
-                titleRowLayout.addView(columnTitle);
+               titleRowLayout.addView(columnTitle);
             }
 
             tableLayout.addView(titleRowLayout);
         }
 
         // Draw row titles and table cells for each row.
-        for (int row = 0; row <= rows; row++) {
+        for (int row = 0; row <= rows-1; row++) {
 
             // Now create the new layout for the row
             LinearLayout rowLayout = new LinearLayout(context);
@@ -121,7 +123,7 @@ public class Table extends AppCompatActivity {
             }
 
             // Fill row with cells
-            for (int column = 0; column <= columns; column++) {
+            for (int column = 0; column <= columns-1; column++) {
 
                 View cellView = inflater.inflate(cellViewID, null);
                 View cell = tableArrayAdapter.createCell(cellView, row, column);

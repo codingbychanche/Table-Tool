@@ -29,28 +29,38 @@ import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity {
 
+    static final int ROWS=4,COLUMNS=4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        int cellViewID=R.layout.tabel_cell_view;
-        int rowTitleViewID=R.layout.row_title;
-        int columnTitleViewID=R.layout.column_title;
-        int upperLeftCornerCellViewID=R.layout.upper_left_corner_cell;
+        int cellViewID = R.layout.tabel_cell_view;
+        int rowTitleViewID = R.layout.row_title;
+        int columnTitleViewID = R.layout.column_title;
+        int upperLeftCornerCellViewID = R.layout.upper_left_corner_cell;
 
+        int[][] cellData = new int[ROWS][COLUMNS];
+        String [] rowTitles={"Row a","Row b","Row c","Row d"};
+        String [] columnTitles={"First","Second","Third","forth"};
+
+        for (int rows = 0; rows <= ROWS-1; rows++) {
+            for (int columns = 0; columns <= COLUMNS - 1; columns++) {
+                cellData[rows][columns] = rows*columns;
+            }
+        }
 
         // Builds a table without cell titles
         //Table table=new Table(3,4,cellViewID,this);
 
         // Builds a table with cell titles
-        Table table=new Table(3,4,upperLeftCornerCellViewID,columnTitleViewID,rowTitleViewID,cellViewID,this);
+        Table table=new Table(ROWS,COLUMNS,upperLeftCornerCellViewID,columnTitleViewID,rowTitleViewID,cellViewID,this);
+        table.setAdapter(new MyTableArrayAdapter(cellData,rowTitles,columnTitles));
         View theTable=table.build();
 
         // Add layout to existing layout
         LinearLayout pl = (LinearLayout) findViewById(R.id.table);
         pl.addView(theTable);
-
-
     }
 }
