@@ -1,10 +1,8 @@
 package berthold.tabletool;
+
 /**
  * This builds a table and returns it's view.
- *
- *
  */
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Table extends AppCompatActivity {
 
-    private cellWasClickedListener listener;
+    private CellWasClickedListener listener;
     boolean tableHasTitleCells;
-    private int columns, rows, cellViewID,upperLeftCornerCellID,columnTitleID,rowTitleID;
+    private int columns, rows, cellViewID, upperLeftCornerCellID, columnTitleID, rowTitleID;
     private int dataSource[][];
     private TableCustomAdapter tableArrayAdapter;
     private Context context;
@@ -29,53 +27,53 @@ public class Table extends AppCompatActivity {
      * @param cellViewID
      * @param context
      */
-    public Table(cellWasClickedListener listener,int rows, int columns, int cellViewID, Context context) {
-        this.listener=listener;
-        tableHasTitleCells=false;
+    public Table(CellWasClickedListener listener, int rows, int columns, int cellViewID, Context context) {
+        this.listener = listener;
+        tableHasTitleCells = false;
         this.columns = columns;
         this.rows = rows;
         this.cellViewID = cellViewID;
         this.context = context;
     }
 
-    public void setAdapter (TableCustomAdapter tableArrayAdapter){
-        this.tableArrayAdapter=tableArrayAdapter;
+    public void setAdapter(TableCustomAdapter tableArrayAdapter) {
+        this.tableArrayAdapter = tableArrayAdapter;
     }
 
     /**
      * Creates a table with row- and column- titles
      *
-     * @param columns
-     * @param rows
-     * @param columnTitleID
-     * @param rowTitleID
-     * @param cellViewID
-     * @param context
+     * @param columns       Number of columns
+     * @param rows          Number of rows
+     * @param columnTitleID ID from layout- xml file of the view, containing the column title layout.
+     * @param rowTitleID    ID from layout- xml file of the view, containing the row title layout.
+     * @param cellViewID    ID from layout- xml file of the view, containing the cell layout.
+     * @param context       {@see Context}
      */
-    public Table(cellWasClickedListener listener,int columns,int rows,int upperLeftCornerCellID,int columnTitleID,int rowTitleID,int cellViewID,Context context){
-        this.listener=listener;
-        tableHasTitleCells=true;
+    public Table(CellWasClickedListener listener, int columns, int rows, int upperLeftCornerCellID, int columnTitleID, int rowTitleID, int cellViewID, Context context) {
+        this.listener = listener;
+        tableHasTitleCells = true;
         this.columns = columns;
         this.rows = rows;
-        this.columnTitleID=columnTitleID;
-        this.upperLeftCornerCellID=upperLeftCornerCellID;
-        this.rowTitleID=rowTitleID;
+        this.columnTitleID = columnTitleID;
+        this.upperLeftCornerCellID = upperLeftCornerCellID;
+        this.rowTitleID = rowTitleID;
         this.cellViewID = cellViewID;
         this.context = context;
     }
 
     /**
      * Builds a table of arbitrary size.
-     *
+     * <p>
      * Table- cells, row- title cells, column- title cells and the cell at the upper left
-     * corner are created from their own layout xml file.
-     *
+     * corner are created from their dedicated layout xml file.
+     * <p>
      * In this version the width of the row title cells, the column- title cells and the
      * table- cells is set to a fixed size. The height of all cells is set to WARP_CONTENT.
      * The problem is: When cell content needs more space it is cut to that size.
      *
-     * @return  View containing the table.
-     *
+     * @return View containing the table.
+     * <p>
      * todo: check for null on title views....
      */
     public View build() {
@@ -100,23 +98,23 @@ public class Table extends AppCompatActivity {
             titleRowLayout.addView(upperLeftCornerCell);
 
             // Now add column titles to title bar
-            for (int column = 0; column <= columns-1; column++) {
+            for (int column = 0; column <= columns - 1; column++) {
 
                 View columnTitleView = inflater.inflate(columnTitleID, null);
                 View columnTitle = tableArrayAdapter.createColumnTitleCell(columnTitleView, column);
-               titleRowLayout.addView(columnTitle);
+                titleRowLayout.addView(columnTitle);
             }
             tableLayout.addView(titleRowLayout);
         }
 
         // Draw row titles and table cells for each row.
-        for (int row = 0; row <= rows-1; row++) {
+        for (int row = 0; row <= rows - 1; row++) {
 
             // Now create the new layout for the row
             LinearLayout rowLayout = new LinearLayout(context);
             rowLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-            if(tableHasTitleCells) {
+            if (tableHasTitleCells) {
                 // First cell of the row is the title
                 View rowTitleView = inflater.inflate(rowTitleID, null);
                 View rowTitle = tableArrayAdapter.createRowTitleCell(rowTitleView, row);
@@ -124,18 +122,18 @@ public class Table extends AppCompatActivity {
             }
 
             // Fill row with cells
-            for (int column = 0; column <= columns-1; column++) {
+            for (int column = 0; column <= columns - 1; column++) {
                 View cellView = inflater.inflate(cellViewID, null);
                 View cell = tableArrayAdapter.createCell(cellView, row, column);
                 rowLayout.addView(cell);
 
-                final int r=row;
-                final int c=column;
+                final int r = row;
+                final int c = column;
 
                 cell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        listener.getCellTouched(r,c,v);
+                        listener.getCellTouched(r, c, v);
                     }
                 });
             }
@@ -143,6 +141,7 @@ public class Table extends AppCompatActivity {
             tableLayout.addView(rowLayout);
             // Next row...
         }
+        // And finally, deliver as promised.....
         return tableLayout;
     }
 }

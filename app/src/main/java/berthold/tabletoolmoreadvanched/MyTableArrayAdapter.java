@@ -3,7 +3,7 @@ package berthold.tabletoolmoreadvanched;
 /**
  * Table Array Adapter.
  *
- * Fills the table cells width data.
+ * Fills the tables cells width data.
  * Gets invoked by {@link berthold.tabletool.Table}
  */
 
@@ -15,24 +15,31 @@ import berthold.tabletool.TableCustomAdapter;
 public class MyTableArrayAdapter extends TableCustomAdapter {
 
     private int[][] dataSource;
-    private String [] columnTitles,rowTitles;
+    private String[] columnTitles, rowTitles;
 
-    MyTableArrayAdapter(int [][] dataSource,String [] rowTitles,String [] columnTitles){
-        this.dataSource=dataSource;
-        this.rowTitles=rowTitles;
-        this.columnTitles=columnTitles;
+    /**
+     * Creates a new adapter.
+     * @param dataSource    Array containing the cells data.
+     * @param rowTitles     Array with the titles for each row.
+     * @param columnTitles  Array with the titles for each column.
+     */
+    MyTableArrayAdapter(int[][] dataSource, String[] rowTitles, String[] columnTitles) {
+        this.dataSource = dataSource;
+        this.rowTitles = rowTitles;
+        this.columnTitles = columnTitles;
     }
+
     /**
      * Creates a table cell containing data to be shown...
      *
      * @param cellView
      * @param row
      * @param column
-     * @return
+     * @return View, filled with custom content.
      */
     public View createCell(View cellView, int row, int column) {
         TextView cellContent = cellView.findViewById(R.id.cell_view_text);
-        String data=""+dataSource [row][column];
+        String data = "" + dataSource[row][column];
         cellContent.setText(data);
         cellContent.setTag("Row:" + row);
         return cellView;
@@ -42,10 +49,10 @@ public class MyTableArrayAdapter extends TableCustomAdapter {
      * Creates the cell at the upper left corner of the table.
      *
      * @param upperLeftCornerCellView
-     * @return
+     * @return View, filled with custom content.
      */
-    public View createUpperLeftCornerCell (View upperLeftCornerCellView){
-        TextView upperLeftCornerCellContent=upperLeftCornerCellView.findViewById(R.id.upper_left_corner_cell_content);
+    public View createUpperLeftCornerCell(View upperLeftCornerCellView) {
+        TextView upperLeftCornerCellContent = upperLeftCornerCellView.findViewById(R.id.upper_left_corner_cell_content);
         upperLeftCornerCellContent.setText("Upper Left");
         return upperLeftCornerCellView;
     }
@@ -55,9 +62,9 @@ public class MyTableArrayAdapter extends TableCustomAdapter {
      *
      * @param columnTitleView
      * @param column
-     * @return
+     * @return View, filled with custom content.
      */
-    public View createColumnTitleCell(View columnTitleView, int column){
+    public View createColumnTitleCell(View columnTitleView, int column) {
         TextView columnTitelContent = columnTitleView.findViewById(R.id.column_title_view_text);
         columnTitelContent.setText(columnTitles[column]);
         return columnTitleView;
@@ -68,7 +75,7 @@ public class MyTableArrayAdapter extends TableCustomAdapter {
      *
      * @param rowTitleView
      * @param row
-     * @return
+     * @return View, filled with custom content.
      */
     public View createRowTitleCell(View rowTitleView, int row) {
         TextView rowTitelContent = rowTitleView.findViewById(R.id.row_title_view_text);

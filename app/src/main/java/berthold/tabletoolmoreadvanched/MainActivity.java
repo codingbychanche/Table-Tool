@@ -18,18 +18,10 @@ import android.widget.LinearLayout;
 
 import berthold.tabletool.*;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.ActionBar;
-import android.content.Context;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements cellWasClickedListener {
+public class MainActivity extends AppCompatActivity implements CellWasClickedListener {
 
     static final int ROWS=4,COLUMNS=4;
 

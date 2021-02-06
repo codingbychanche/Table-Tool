@@ -2,6 +2,9 @@ package berthold.tabletool;
 
 import android.view.View;
 
+/**
+ * Custom adapter to populate the table with content.
+ */
 public abstract class TableCustomAdapter {
 
     public abstract View createCell(View cellView,int row,int column);
