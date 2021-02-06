@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements cellWasClickedLis
     public void getCellTouched(int row,int column,View v){
         TextView text=v.findViewById(R.id.cell_view_text);
 
-        Toast.makeText(this,"Cell "+row+"/"+column+ " was touched  "+text.getText().toString(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"Cell "+row+"/"+column+ " was touched  "+text.getText().toString(),Toast.LENGTH_LONG).show();
     }
 
 }
