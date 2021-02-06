@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Table extends AppCompatActivity {
 
+    private cellWasClickedListener listener;
     boolean tableHasTitleCells;
     private int columns, rows, cellViewID,upperLeftCornerCellID,columnTitleID,rowTitleID;
     private int dataSource[][];
@@ -28,7 +29,8 @@ public class Table extends AppCompatActivity {
      * @param cellViewID
      * @param context
      */
-    public Table(int rows, int columns, int cellViewID, Context context) {
+    public Table(cellWasClickedListener listener,int rows, int columns, int cellViewID, Context context) {
+        this.listener=listener;
         tableHasTitleCells=false;
         this.columns = columns;
         this.rows = rows;
@@ -50,7 +52,8 @@ public class Table extends AppCompatActivity {
      * @param cellViewID
      * @param context
      */
-    public Table(int columns,int rows,int upperLeftCornerCellID,int columnTitleID,int rowTitleID,int cellViewID,Context context){
+    public Table(cellWasClickedListener listener,int columns,int rows,int upperLeftCornerCellID,int columnTitleID,int rowTitleID,int cellViewID,Context context){
+        this.listener=listener;
         tableHasTitleCells=true;
         this.columns = columns;
         this.rows = rows;
@@ -74,7 +77,6 @@ public class Table extends AppCompatActivity {
      * @return  View containing the table.
      *
      * todo: check for null on title views....
-     * todo: Add data source for cell content and row/ column titel- cells content
      */
     public View build() {
 
@@ -104,7 +106,6 @@ public class Table extends AppCompatActivity {
                 View columnTitle = tableArrayAdapter.createColumnTitleCell(columnTitleView, column);
                titleRowLayout.addView(columnTitle);
             }
-
             tableLayout.addView(titleRowLayout);
         }
 
@@ -124,17 +125,24 @@ public class Table extends AppCompatActivity {
 
             // Fill row with cells
             for (int column = 0; column <= columns-1; column++) {
-
                 View cellView = inflater.inflate(cellViewID, null);
                 View cell = tableArrayAdapter.createCell(cellView, row, column);
                 rowLayout.addView(cell);
+
+                final int r=row;
+                final int c=column;
+
+                cell.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.getCellTouched(r,c,v);
+                    }
+                });
             }
             // Add row to table layout
             tableLayout.addView(rowLayout);
             // Next row...
         }
-
-        //return cellView;
         return tableLayout;
     }
 }

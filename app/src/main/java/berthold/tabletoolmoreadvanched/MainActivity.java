@@ -26,8 +26,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements cellWasClickedListener {
 
     static final int ROWS=4,COLUMNS=4;
 
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         //Table table=new Table(3,4,cellViewID,this);
 
         // Builds a table with cell titles
-        Table table=new Table(ROWS,COLUMNS,upperLeftCornerCellViewID,columnTitleViewID,rowTitleViewID,cellViewID,this);
+        Table table=new Table(this,ROWS,COLUMNS,upperLeftCornerCellViewID,columnTitleViewID,rowTitleViewID,cellViewID,this);
         table.setAdapter(new MyTableArrayAdapter(cellData,rowTitles,columnTitles));
         View theTable=table.build();
 
@@ -63,4 +65,12 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout pl = (LinearLayout) findViewById(R.id.table);
         pl.addView(theTable);
     }
+
+    @Override
+    public void getCellTouched(int row,int column,View v){
+        TextView text=v.findViewById(R.id.cell_view_text);
+
+        Toast.makeText(this,"Cell "+row+"/"+column+ " was touched  "+text.getText().toString(),Toast.LENGTH_SHORT).show();
+    }
+
 }
