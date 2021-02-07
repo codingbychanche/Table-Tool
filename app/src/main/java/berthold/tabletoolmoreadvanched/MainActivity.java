@@ -21,7 +21,7 @@ import berthold.tabletool.*;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements CellWasClickedListener {
+public class MainActivity extends AppCompatActivity implements cellWasClickedListener {
 
     static final int ROWS=4,COLUMNS=4;
 
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements CellWasClickedLis
 
         int[][] cellData = new int[ROWS][COLUMNS];
         String [] rowTitles={"Row a","Row b","Row c","Row d"};
-        String [] columnTitles={"First","Second","Third","forth"};
+        String [] columnTitles={"First","Sec","Third","forth"};
 
         for (int rows = 0; rows <= ROWS-1; rows++) {
             for (int columns = 0; columns <= COLUMNS - 1; columns++) {
@@ -59,10 +59,9 @@ public class MainActivity extends AppCompatActivity implements CellWasClickedLis
     }
 
     @Override
-    public void getCellTouched(int row,int column,View v){
-        TextView text=v.findViewById(R.id.cell_view_text);
+    public void getCellTouched(int row,int column,View v) {
+        TextView text = v.findViewById(R.id.cell_view_text);
 
-        Toast.makeText(this,"Cell "+row+"/"+column+ " was touched  "+text.getText().toString(),Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Cell " + row + "/" + column + " was touched  " + text.getText().toString(), Toast.LENGTH_LONG).show();
     }
-
 }

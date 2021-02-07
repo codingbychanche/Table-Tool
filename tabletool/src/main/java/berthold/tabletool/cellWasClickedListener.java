@@ -5,7 +5,7 @@ import android.view.View;
  * Implement this to receive onClickListener events from
  * cells touched.
  */
-public interface CellWasClickedListener {
+public interface cellWasClickedListener {
 
     /**
      * Cell was touched.

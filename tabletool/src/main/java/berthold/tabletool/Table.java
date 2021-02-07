@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Table extends AppCompatActivity {
 
-    private CellWasClickedListener listener;
+    private cellWasClickedListener listener;
     boolean tableHasTitleCells;
     private int columns, rows, cellViewID, upperLeftCornerCellID, columnTitleID, rowTitleID;
     private int dataSource[][];
@@ -27,7 +27,7 @@ public class Table extends AppCompatActivity {
      * @param cellViewID
      * @param context
      */
-    public Table(CellWasClickedListener listener, int rows, int columns, int cellViewID, Context context) {
+    public Table(cellWasClickedListener listener, int rows, int columns, int cellViewID, Context context) {
         this.listener = listener;
         tableHasTitleCells = false;
         this.columns = columns;
@@ -50,7 +50,7 @@ public class Table extends AppCompatActivity {
      * @param cellViewID    ID from layout- xml file of the view, containing the cell layout.
      * @param context       {@see Context}
      */
-    public Table(CellWasClickedListener listener, int columns, int rows, int upperLeftCornerCellID, int columnTitleID, int rowTitleID, int cellViewID, Context context) {
+    public Table(cellWasClickedListener listener, int columns, int rows, int upperLeftCornerCellID, int columnTitleID, int rowTitleID, int cellViewID, Context context) {
         this.listener = listener;
         tableHasTitleCells = true;
         this.columns = columns;
